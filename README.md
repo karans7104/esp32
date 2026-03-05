@@ -125,5 +125,7 @@ SHA_ACC=1, AES_ACC=1, INDCPA_KEYPAIR_DUAL=1, INDCPA_ENC_DUAL=1, INDCPA_DEC_DUAL=
 
 ## Credits
 
-Based on the [CRYSTALS-KYBER reference implementation](https://github.com/pq-crystals/kyber) by the pq-crystals team.
+Based on the [CRYSTALS-KYBER reference implementation](https://github.com/pq-crystals/kyber).
+
+
 
