@@ -2,7 +2,7 @@
 
 ## Kyber-512/768/1024 (90s variant) vs. NIST FIPS 203 (ML-KEM)
 
-**Date:** 2025  
+**Date:** March 2026  
 **Standard Reference:** NIST FIPS 203 — Module-Lattice-Based Key-Encapsulation Mechanism Standard (August 2024)  
 **Implementation Under Audit:** `components/` directory — CRYSTALS-Kyber 90s reference (Segatz et al. 2022 dual-core ESP32 variant)
 
