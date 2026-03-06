@@ -64,7 +64,7 @@ The NTT implementation is mathematically equivalent to FIPS 203 Algorithms 9-10.
 
 ### GAP-1: Missing Domain Separation in K-PKE.KeyGen [CRITICAL]
 
-**FIPS 203 Reference:** Algorithm 16 (K-PKE.KeyGen), Step 1  
+**FIPS 203 Reference:** Algorithm 13 (K-PKE.KeyGen), Step 1  
 **Severity:** Critical — produces different key material from same seed
 
 **FIPS 203 specifies:**
@@ -95,7 +95,7 @@ hash_g(buf, buf, KYBER_SYMBYTES + 1);
 
 ### GAP-2: Unnecessary m <- H(m) Pre-Hashing in Encapsulation [CRITICAL]
 
-**FIPS 203 Reference:** Algorithm 20 (ML-KEM.Encaps_internal), Step 1  
+**FIPS 203 Reference:** Algorithm 17 (ML-KEM.Encaps_internal), Step 1  
 **Severity:** Critical — produces different shared secret from same randomness
 
 **FIPS 203 specifies:**
@@ -122,7 +122,7 @@ was a defense against poor RNG output, but FIPS 203 trusts the RNG (Section 3.3)
 
 ### GAP-3: Shared Secret Derivation via KDF(K' || H(c)) [CRITICAL]
 
-**FIPS 203 Reference:** Algorithm 20 (ML-KEM.Encaps_internal) Step 1; Algorithm 22 (ML-KEM.Decaps_internal) Steps 6-7  
+**FIPS 203 Reference:** Algorithms 17-18 (ML-KEM.Encaps_internal and ML-KEM.Decaps_internal)  
 **Severity:** Critical — produces different shared secret value
 
 **FIPS 203 specifies (Encaps):**
@@ -186,7 +186,7 @@ cmov(ss, kr, KYBER_SSBYTES, 1-fail);       // if success, overwrite with K'
 
 ### GAP-4: Missing Encapsulation Key Modulus Check [MODERATE]
 
-**FIPS 203 Reference:** Section 7.1, Algorithm 20 (ML-KEM.Encaps_internal), Step 2  
+**FIPS 203 Reference:** Section 7.1, Algorithm 20 (ML-KEM.Encaps), Step 2  
 **Severity:** Moderate — could accept malformed public keys
 
 **FIPS 203 specifies:**
@@ -282,7 +282,7 @@ while acknowledging this primitive-level limitation.
 
 ### GAP-7: Keypair Generates d Internally [MINOR]
 
-**FIPS 203 Reference:** Algorithm 20 (ML-KEM.KeyGen_internal)  
+**FIPS 203 Reference:** Algorithm 16 (ML-KEM.KeyGen_internal)  
 **Severity:** Minor — API structure difference
 
 **FIPS 203 specifies:**
@@ -322,7 +322,7 @@ No functional impact.
 
 ### GAP-9: Secret Key Layout Includes H(pk) [INFORMATIONAL]
 
-**FIPS 203 Reference:** Algorithm 20 (ML-KEM.KeyGen_internal), Step 3  
+**FIPS 203 Reference:** Algorithm 16 (ML-KEM.KeyGen_internal), Step 3  
 **Severity:** Informational — compliant
 
 **Current implementation:**
@@ -347,15 +347,15 @@ key generation and used in both Encaps and Decaps to avoid recomputing it.
 
 | ID | Gap Description | Severity | FIPS 203 Ref | Files Affected |
 |----|----------------|----------|--------------|----------------|
-| GAP-1 | Missing `G(d\|\|k)` domain separation | **Critical** | Alg 16 Step 1 | `indcpa.c` |
-| GAP-2 | Extra `m <- H(m)` pre-hash in Encaps | **Critical** | Alg 20 Step 1 | `kem.c` |
-| GAP-3 | `KDF(K'\|\|H(c))` instead of direct K / `J(z\|\|c)` | **Critical** | Alg 20-22 | `kem.c` |
+| GAP-1 | Missing `G(d\|\|k)` domain separation | **Critical** | Alg 13 Step 1 | `indcpa.c` |
+| GAP-2 | Extra `m <- H(m)` pre-hash in Encaps | **Critical** | Alg 17 Step 1 | `kem.c` |
+| GAP-3 | `KDF(K'\|\|H(c))` instead of direct K / `J(z\|\|c)` | **Critical** | Alg 17-18 | `kem.c` |
 | GAP-4 | No modulus check on encapsulation key | Moderate | §7.1, Alg 20 | `kem.c`, `poly.c` |
 | GAP-5 | No input length/type validation | Moderate | §7.1-7.2 | `kem.c` |
 | GAP-6 | 90s primitives not in FIPS 203 | Moderate | §4.1 | `symmetric.h` |
-| GAP-7 | d generated internally (not a parameter) | Minor | Alg 16, 20 | `indcpa.c`, `kem.c` |
+| GAP-7 | d generated internally (not a parameter) | Minor | Alg 13, 16 | `indcpa.c`, `kem.c` |
 | GAP-8 | "Kyber" naming instead of "ML-KEM" | Minor | Throughout | All files |
-| GAP-9 | Secret key layout | Info | Alg 20 | — (compliant) |
+| GAP-9 | Secret key layout | Info | Alg 16 | — (compliant) |
 
 **Critical gaps (1-3)** cause the implementation to produce **different shared secrets**
 from identical inputs compared to a FIPS 203 ML-KEM implementation. These are the
