@@ -17,6 +17,8 @@ import sys
 import argparse
 from collections import defaultdict
 
+sys.stdout.reconfigure(encoding='utf-8')
+
 # ================================================================
 #  DAG definitions (must match dag_tasks.h exactly)
 # ================================================================
@@ -282,13 +284,13 @@ def main():
     print(report_text)
 
     out_path = os.path.join(args.results_dir, "critical_path_analysis.txt")
-    with open(out_path, 'w') as f:
+    with open(out_path, 'w', encoding='utf-8') as f:
         f.write(report_text + "\n")
     print(f"\nReport saved to: {out_path}")
 
     # Also save JSON for list_scheduler.py
     json_out = os.path.join(args.results_dir, f"cpm_results_kyber{level}.json")
-    with open(json_out, 'w') as f:
+    with open(json_out, 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=2)
     print(f"JSON saved to: {json_out}")
 

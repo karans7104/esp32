@@ -21,6 +21,8 @@ import sys
 import argparse
 from collections import defaultdict
 
+sys.stdout.reconfigure(encoding='utf-8')
+
 try:
     import matplotlib
     matplotlib.use('Agg')       # non-interactive backend
@@ -354,7 +356,7 @@ def main():
 
     # Save text report
     txt_path = os.path.join(args.results_dir, "schedule_comparison.txt")
-    with open(txt_path, 'w') as f:
+    with open(txt_path, 'w', encoding='utf-8') as f:
         f.write(report_text + "\n")
     print(f"\n  Report saved to: {txt_path}")
 
